@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="flex flex-col text-center w-full mb-20">
+      <h2 class="text-xs text-indigo-500 tracking-widest font-medium title-font mb-1">Payment</h2>
+      <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900">Payment Details</h1>
+    </div>
+    <div class="flex flex-wrap -m-4">
+      <div class="p-4 md:w-1/2">
+        <div class="flex rounded-lg h-full bg-gray-100 p-8 flex-col">
+          <div class="flex items-center mb-3">
+            <div class="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-indigo-500 text-white flex-shrink-0">
+              <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                <path d="M22 12h-4l-3 9L9 3+
+                5-3 9H2"></path>
+              </svg>
+            </div>
+            <h2 class="text-gray-900 text-lg title-font font-medium">Payment Information</h2>
+          </div>
+          <div class="flex-grow">
+            <p class="leading-relaxed text-base">You have chosen the {{ plan.name }} plan.</p>
+            <p class="leading-relaxed text-base">Amount to Pay: ${{ plan.trading_amount }}</p>
+            <div class="flex justify-center">
+              <button class="btn btn-primary">pay from my capital</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

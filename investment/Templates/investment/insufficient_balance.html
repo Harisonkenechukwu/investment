@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Insufficient Balance{% endblock %}
+{% block content %}
+<div class="flex justify-center">
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-4 rounded relative w-full max-w-full">
+        <strong class="font-bold text-xl">Insufficient Balance!</strong>
+        <span class="block mt-2 text-lg">
+            Unfortunately, your current balance is not enough to complete this transaction. 
+            To proceed with your investment or any other financial activities, you will need 
+            to deposit additional funds into your account. This will ensure that you can 
+            take advantage of the opportunities available to you and continue your investment journey.
+        </span>
+        <span class="block mt-2 text-lg">
+            Please consider reviewing your financial plans and adding the necessary amount 
+            to avoid any interruptions in your trading activities. Your financial success is important to us!
+        </span>
+    </div>
+</div>
+<div class="flex justify-center mt-4">
+    <a href="#" class="text-white bg-green-600 px-4 py-2 rounded hover:bg-green-700">
+        Deposit Funds
+    </a>
+</div>
+{% endblock %}

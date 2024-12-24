@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Our team section #tailwind</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="//cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+
+</head>
+<body><section class="max-w-screen-xl mx-auto py-20 px-8 lg:px-10">
+  <h2 class="text-4xl xl:text-5xl capitalize text-center text-blue-500 font-bold">Our Team</h2>
+  <hr class="mx-auto w-12 h-1 outline-0 border-0 bg-green-300 block mt-4 mb-6">
+  <p class="text-center text-xl text-white">Our team consists only of the best talents in the investment industry.</p>
+
+  <div class="flex flex-col gap-6 mt-16">
+    <div class="flex flex-col md:flex-row gap-6">
+      <div class="w-full lg:w-1/4 rounded-3xl overflow-hidden">
+        <img src="https://images.pexels.com/photos/1036622/pexels-photo-1036622.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Hanna Lubin" class="w-full h-full object-cover aspect-video lg:aspect-square">
+      </div>
+      <div class="w-full lg:w-9/12 bg-red-100 rounded-3xl flex flex-col justify-center p-8 lg:p-14">
+        <h3 class="text-2xl capitalize text-indigo-900 font-semibold">Hanna Lubin</h3>
+        <span class="inline-block capitalize text-xl text-indigo-900 font-light mt-1.5 mb-5">Chief Investment Officer</span>
+        <p class="text-indigo-900 opacity-75 leading-normal">Hanna has over 15 years of experience in investment management, specializing in portfolio strategy and asset allocation. Her expertise helps clients achieve their financial goals through tailored investment solutions.</p>
+      </div>
+    </div>
+    <div class="flex flex-col md:flex-row-reverse gap-6">
+      <div class="w-full lg:w-1/4 rounded-3xl overflow-hidden">
+        <img src="https://images.pexels.com/photos/1462637/pexels-photo-1462637.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Erin Calzoni" class="w-full h-full object-cover aspect-video lg:aspect-square">
+      </div>
+      <div class="w-full lg:w-9/12 bg-blue-100 rounded-3xl flex flex-col justify-center p-8 lg:p-14">
+        <h3 class="text-2xl capitalize text-indigo-900 font-semibold">Erin Calzoni</h3>
+        <span class="inline-block capitalize text-xl text-indigo-900 font-light mt-1.5 mb-5">Senior Financial Analyst</span>
+        <p class="text-indigo-900 opacity-75 leading-normal">Erin is a seasoned financial analyst with a strong background in market research and financial modeling. She provides critical insights that drive investment decisions and optimize portfolio performance.</p>
+      </div>
+    </div>
+    <div class="flex flex-col md:flex-row gap-6">
+      <div class="w-full lg:w-1/4 rounded-3xl overflow-hidden">
+        <img src="https://images.pexels.com/photos/1065084/pexels-photo-1065084.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Jenna Smith" class="w-full h-full object-cover aspect-video lg:aspect-square">
+      </div>
+      <div class="w-full lg:w-9/12 bg-yellow-100 rounded-3xl flex flex-col justify-center p-8 lg:p-14">
+        <h3 class="text-2xl capitalize text-indigo-900 font-semibold">Jenna Smith</h3>
+        <span class="inline-block capitalize text-xl text-indigo-900 font-light mt-1.5 mb-5">Investment Strategist</span>
+        <p class="text-indigo-900 opacity-75 leading-normal">Jenna specializes in developing innovative investment strategies that align with clients' risk tolerance and financial objectives. Her analytical skills and market knowledge ensure effective investment planning.</p>
+      </div>
+    </div>
+    <div class="flex flex-col md:flex-row-reverse gap-6">
+      <div class="w-full lg:w-1/4 rounded-3xl overflow-hidden">
+        <img src="https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt ="Christina Meyer" class="w-full h-full object-cover aspect-video lg:aspect-square">
+      </div>
+      <div class="w-full lg:w-9/12 bg-green-100 rounded-3xl flex flex-col justify-center p-8 lg:p-14">
+        <h3 class="text-2xl capitalize text-indigo-900 font-semibold">Christina Meyer</h3>
+        <span class="inline-block capitalize text-xl text-indigo-900 font-light mt-1.5 mb-5">Risk Management Specialist</span>
+        <p class="text-indigo-900 opacity-75 leading-normal">Christina focuses on identifying and mitigating risks associated with investment portfolios. With her expertise in risk assessment, she helps clients navigate market volatility and protect their investments.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- partial -->
+
+<section class="text-white-600 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <h1 class="text-3xl font-medium title-font text-white-900 mb-12 text-center">Frequently Asked Questions</h1>
+    <div class="space-y-4">
+      <!-- FAQ Item 1 -->
+      <div x-data="{ open: false }" class="border rounded-lg">
+        <button @click="open = !open" class="w-full p-4 text-left text-lg font-medium focus:outline-none">
+          <span>What are the details of the investment plans?</span>
+          <svg :class="open ? 'rotate-180' : ''" class="w-5 h-5 inline-block float-right transform transition-transform duration-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div x-show="open" x-transition class="p-4 text-gray-500">
+          We offer daily, weekly, and monthly profit plans with a minimum investment of $100. Each plan is designed to maximize your returns based on your preferences.
+        </div>
+      </div>
+
+      <!-- FAQ Item 2 -->
+      <div x-data="{ open: false }" class="border rounded-lg">
+        <button @click="open = !open" class="w-full p-4 text-left text-lg font-medium focus:outline-none">
+          <span>How long does it take to process payments?</span>
+          <svg :class="open ? 'rotate-180' : ''" class="w-5 h-5 inline-block float-right transform transition-transform duration-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div x-show="open" x-transition class="p-4 text-gray-500">
+          Payments are processed within 24-48 hours. You will receive a confirmation email once the payment is successful.
+        </div>
+      </div>
+
+      <!-- FAQ Item 3 -->
+      <div x-data="{ open: false }" class="border rounded-lg">
+        <button @click="open = !open" class="w-full p-4 text-left text-lg font-medium focus:outline-none">
+          <span>What security measures are in place?</span>
+          <svg :class="open ? 'rotate-180' : ''" class="w-5 h-5 inline-block float-right transform transition-transform duration-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div x-show="open" x-transition class="p-4 text-gray-500">
+          We use two-factor authentication, encrypted transactions, and secure servers to ensure the safety of your investments and personal information.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <script  src="./script.js"></script>
+
+</body>
+</html>

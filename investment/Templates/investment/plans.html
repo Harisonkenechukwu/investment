@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+{% if user_investment %}
+<p>You already have an active investment plan. Please check your dashboard.</p>
+{% else %}
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="flex flex-col text-center w-full mb-20">
+      <h2 class="text-xs text-indigo-500 tracking-widest font-medium title-font mb-1">Investment Plans</h2>
+      <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900">Choose Your Plan</h1>
+    </div>
+    <div class="flex flex-wrap -m-4">
+
+      {% for plan in plans %}
+      <div class="p-4 md:w-1/3 w-full">
+        <div class="flex rounded-lg h-full bg-gray-100 p-8 flex-col shadow-md">
+          <div class="flex items-center mb-3">
+            <div class="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-indigo-500 text-white flex-shrink-0">
+              <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+              </svg>
+            </div>
+            <h2 class="text-gray-900 text-lg title-font font-medium">{{ plan.name }}</h2>
+          </div>
+          <div class="flex-grow">
+            <ul class="list-none mb-4">
+              <li class="py-2">
+                <span class="text-gray-500">Trading Amount:</span>
+                <span class="text-gray-900">${{ plan.trading_amount }}</span>
+              </li>
+              <li class="py-2">
+                <span class="text-gray-500">Daily Profit:</span>
+                <span class="text-gray-900">${{ plan.daily_profit }}</span>
+              </li>
+            </ul>
+            <a href="{% url 'investment:choose_plan' plan.id %}" class="mt-3 text-indigo-500 inline-flex items-center">
+              Choose Plan
+              <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="container mx-auto p-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <a href="{% url 'about:initiate_deposit' %}" class="text-white bg-green-600 px-6 py-2 rounded hover:bg-green-700">
+            Deposit
+        </a>
+        <a href="#" class="text-white bg-red-600 px-4 py-2 rounded hover:bg-red-700">
+            Withdraw
+        </a>
+    </div>
+
+    <!-- Net Worth Card -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="p-6 bg-black-800 rounded-lg shadow-lg">
+            <h2 class="text-xl font-medium mb-2">Net Worth</h2>
+            <p class="text-4xl font-bold text-green-400">${{ net_worth|floatformat:2 }}</p>
+        </div>
+
+        <!-- Capital -->
+        <div class="p-6 bg-black-800 rounded-lg shadow-lg">
+            <h2 class="text-xl font-medium mb-2">Capital</h2>
+            <p class="text-4xl font-bold">${{ capital|floatformat:2 }}</p>
+        </div>
+
+        <!-- Wallet Balance -->
+        <div class="p-6 bg-black-800 rounded-lg shadow-lg">
+            <h2 class="text-xl font-medium mb-2">Wallet Balance</h2>
+            <p class="text-4xl font-bold">${{ wallet_balance|floatformat:2 }}</p>
+        </div>
+
+        <!-- Total Earnings -->
+        <div class="p-6 bg-black-800 rounded-lg shadow-lg">
+            <h2 class="text-xl font-medium mb-2">Earn Balance</h2>
+            <p class="text-4xl font-bold text-blue-400">${{ total_earnings|floatformat:2 }}</p>
+        </div>
+    </div>
+    <br>
+<!-- Centered Display for Investments -->
+<div class="flex flex-col items-center justify-center px-4">
+    {% for investment in investments %}
+    <div class="p-1 bg-gray-100 rounded-lg shadow-md w-full max-w-md text-center mb-6">
+        <!-- Investment Details Button -->
+        <button data-modal-target="payment-modal-{{ investment.id }}" 
+                data-modal-toggle="payment-modal-{{ investment.id }}" 
+                class="block w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">
+            Investment Details
+        </button>
+
+        <!-- Progress Bar -->
+        <div class="mt-4">
+            <div class="text-sm text-gray-500 mb-2">
+                {{ investment.progress_percentage }}% complete ({{ investment.elapsed_days }} days out of {{ investment.total_days }})
+            </div>
+            <div class="w-full bg-gray-300 rounded-full h-2.5">
+                <div class="bg-blue-600 h-2.5 rounded-full" style="width: {{ investment.progress_percentage }}%;"></div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Modals for each investment -->
+{% for investment in investments %}
+<div id="payment-modal-{{ investment.id }}" tabindex="-1" aria-hidden="true" 
+     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div class="flex items-center justify-between p-4 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                    Payment Details
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" 
+                        data-modal-toggle="payment-modal-{{ investment.id }}">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <div class="p-4">
+                <ul class="space-y-4 mb-4">
+                    <li>
+                        <strong class="block text-lg">Plan Name:</strong>
+                        <span class="text-gray-600">{{ investment.plan.name }}</span>
+                    </li>
+                    <li>
+                        <strong class="block text-lg">Trading Amount:</strong>
+                        <span class="text-gray-600">${{ investment.plan.trading_amount|floatformat:2 }}</span>
+                    </li>
+                    <li>
+                        <strong class="block text-lg">Daily Profit:</strong>
+                        <span class="text-gray-600">${{ investment.plan.daily_profit|floatformat:2 }}</span>
+                    </li>
+                    <li>
+                        <strong class="block text-lg">Start Date:</strong>
+                        <span class="text-gray-600">{{ investment.start_date }}</span>
+                    </li>
+                    <li>
+                        <strong class="block text-lg">End Date:</strong>
+                        <span class="text-gray-600">{{ investment.end_date }}</span>
+                    </li>
+                    <li>
+                        <strong class="block text-lg">Total Earnings:</strong>
+                        <span class="text-gray-600">${{ investment.total_earnings|floatformat:2 }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<br>  
+  <!-- Enhanced Referral Program Section -->
+  <div class="mt-8 bg-gray-800 rounded-lg shadow-lg p-6">
+    <h2 class="text-2xl font-bold mb-6 text-white">Referral Program</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-gray-700 p-4 rounded-lg">
+            <h3 class="text-lg font-semibold mb-2 text-white">Your Referral Code</h3>
+            <div class="flex items-center space-x-2">
+                <code id="referralCode" class="bg-gray-800 px-3 py-2 rounded text-lg flex-1 text-white">{{ user.referral.referral_code }}</code>
+                <button onclick="copyReferralCode()" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded">
+                    Copy
+                </button>
+            </div>
+        </div>
+        
+        <div class="bg-gray-700 p-4 rounded-lg">
+            <h3 class="text-lg font-semibold mb-2 text-white">Total Referrals</h3>
+            <p class="text-3xl font-bold text-green-400">{{ user.referral.referral_count }}</p>
+        </div>
+        
+        <div class="bg-gray-700 p-4 rounded-lg">
+            <h3 class="text-lg font-semibold mb-2 text-white">Referral Earnings</h3>
+            <p class="text-3xl font-bold text-green-400">${{ user.referral.referral_earnings|floatformat:2 }}</p>
+        </div>
+    </div>
+
+    <div class="mt-6">
+        <button onclick="shareReferralLink()" 
+                class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg text-lg transition duration-200">
+            Share Your Referral Link
+        </button>
+    </div>
+</div>
+
+
+    <div>
+        <script src="https://widgets.coingecko.com/gecko-coin-price-marquee-widget.js"></script>
+        <gecko-coin-price-marquee-widget locale="en" outlined="true" coin-ids="" initial-currency="usd"></gecko-coin-price-marquee-widget>
+    </div>
+    <br>
+    <div>
+        <!-- TradingView Widget BEGIN -->
+        <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
+            {
+                "width": "100%",
+                "height": 500,
+                "defaultColumn": "overview",
+                "screener_type": "crypto_mkt",
+                "displayCurrency": "USD",
+                "colorTheme": "light",
+                "locale": "en"
+            }
+            </script>
+        </div>
+        <!-- TradingView Widget END -->
+    </div>
+
+    
+<script>
+    function copyReferralCode() {
+        const referralCode = document.getElementById('referralCode').textContent;
+        navigator.clipboard.writeText(referralCode).then(() => {
+            alert('Referral code copied to clipboard!');
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+        });
+    }
+    
+    function shareReferralLink() {
+        const referralLink = `https://yourwebsite.com/signup/?ref={{ user.referral.referral_code }}`;
+        
+        if (navigator.share) {
+            navigator.share({
+                title: 'Join our investment platform!',
+                text: 'Use my referral code to sign up!',
+                url: referralLink
+            }).catch((error) => console.log('Error sharing:', error));
+        } else {
+            navigator.clipboard.writeText(referralLink).then(() => {
+                alert('Referral link copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+    }
+    </script>
+{% endblock %}
+
