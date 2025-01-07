@@ -1,0 +1,47 @@
+<!-- bitcoin_payment.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin Payment</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+</head>
+<body>
+    <h1>Pay with Bitcoin</h1>
+    <form id="bitcoin-payment-form">
+        <label for="amount">Enter Amount (in USD):</label>
+        <input type="number" id="amount" name="amount" required min="1">
+        <button type="button" id="connect-wallet">Connect Wallet</button>
+    </form>
+
+    <div id="wallet-section" style="display: none;">
+        <p>Connected Wallet Address: <span id="wallet-address"></span></p>
+        <p>BTC Equivalent: <span id="btc-equivalent">Calculating...</span></p>
+        <button id="pay-now">Pay Now</button>
+    </div>
+
+    <script>
+        const BTC_ADDRESS = "your-bitcoin-receiving-address"; // Your BTC address
+        const USD_TO_BTC_RATE = 0.000028; // Replace with live rates from an API.
+
+        let walletAddress = "";
+
+        document.getElementById('connect-wallet').addEventListener('click', () => {
+            // Simulating wallet connect
+            walletAddress = "sample-wallet-address"; // This should come from a wallet-connect service.
+            document.getElementById('wallet-section').style.display = 'block';
+            document.getElementById('wallet-address').innerText = walletAddress;
+
+            const amount = document.getElementById('amount').value;
+            document.getElementById('btc-equivalent').innerText = (amount * USD_TO_BTC_RATE).toFixed(8) + " BTC";
+        });
+
+        document.getElementById('pay-now').addEventListener('click', async () => {
+            const amountBTC = parseFloat(document.getElementById('btc-equivalent').innerText);
+            alert(`Proceeding to send ${amountBTC} BTC to ${BTC_ADDRESS}`);
+            // Send transaction logic here (via a library like bitcoinjs-lib or an API)
+        });
+    </script>
+</body>
+</html>

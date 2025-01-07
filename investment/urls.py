@@ -18,4 +18,5 @@ urlpatterns = [
     path('deposit/success/', views.payment_success, name='payment_success'),
     path('deposit/cancel/', views.payment_cancel, name='payment_cancel'),
     path('deposit/cryptomus/callback/', views.cryptomus_callback, name='cryptomus_callback'),  # Updated this line
+    path('referral-program/', views.referral_program, name='referral_program'),
 ]

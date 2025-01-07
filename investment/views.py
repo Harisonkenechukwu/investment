@@ -52,6 +52,19 @@ from django.contrib.auth.decorators import login_required
 from .models import Deposit
 from .utils.stripe_utils import create_stripe_payment_session
 from .utils.cryptomus_utils import create_cryptomus_invoice, verify_signature
+
+
+@login_required
+def referral_program(request):
+    user = request.user
+    context = {
+        'referral_code': user.referral.referral_code,
+        'referral_count': user.referral.referral_count,
+        'referral_earnings': user.referral.referral_earnings,
+    }
+    return render(request, 'referral_program.html', context)
+
+
 @login_required
 def initiate_deposit(request):
     if request.method == "POST":

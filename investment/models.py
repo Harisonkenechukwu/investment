@@ -11,6 +11,7 @@ class Deposit(models.Model):
     GATEWAY_CHOICES = [
         ('stripe', 'Stripe'),
         ('cryptomus', 'Cryptomus'),
+        ('bitcoin', 'Bitcoin'),  # Add Bitcoin as a payment gateway
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)

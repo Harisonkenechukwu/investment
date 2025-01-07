@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block extra_head %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock %}
 {% block title %}Dashboard{% endblock %}
@@ -10,36 +11,51 @@
         <a href="{% url 'about:initiate_deposit' %}" class="text-white bg-green-600 px-6 py-2 rounded hover:bg-green-700">
             Deposit
         </a>
+        
         <a href="#" class="text-white bg-red-600 px-4 py-2 rounded hover:bg-red-700">
             Withdraw
         </a>
     </div>
 
-    <!-- Net Worth Card -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="p-6 bg-black-800 rounded-lg shadow-lg">
-            <h2 class="text-xl font-medium mb-2">Net Worth</h2>
-            <p class="text-4xl font-bold text-green-400">${{ net_worth|floatformat:2 }}</p>
-        </div>
-
-        <!-- Capital -->
-        <div class="p-6 bg-black-800 rounded-lg shadow-lg">
-            <h2 class="text-xl font-medium mb-2">Capital</h2>
-            <p class="text-4xl font-bold">${{ capital|floatformat:2 }}</p>
-        </div>
-
-        <!-- Wallet Balance -->
-        <div class="p-6 bg-black-800 rounded-lg shadow-lg">
-            <h2 class="text-xl font-medium mb-2">Wallet Balance</h2>
-            <p class="text-4xl font-bold">${{ wallet_balance|floatformat:2 }}</p>
-        </div>
-
-        <!-- Total Earnings -->
-        <div class="p-6 bg-black-800 rounded-lg shadow-lg">
-            <h2 class="text-xl font-medium mb-2">Earn Balance</h2>
-            <p class="text-4xl font-bold text-blue-400">${{ total_earnings|floatformat:2 }}</p>
+ <!-- Net Worth Section -->
+<div class="bg-gray-100 p-6 rounded-lg shadow-lg">
+    <!-- Total Funds -->
+    <div class="p-4 rounded-lg bg-gray-100 mb-6">
+        <h2 class="text-lg font-medium text-gray-600">Total funds</h2>
+        <div class="flex items-center justify-between mt-2">
+            <p class="text-4xl font-bold text-gray-800">${{ net_worth|floatformat:2 }}</p>
+            <span class="text-sm font-medium text-gray-500 flex items-center">
+                <a href="{% url 'about:referral_program' %}"><i class="fas fa-user-plus mr-1"></i>Refer and Earn
+            </span></a>
+            
         </div>
     </div>
+
+<!-- Breakdown of Categories -->
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+    <!-- Personal -->
+    <div class="p-4 rounded-xl bg-white shadow hover:shadow-lg transition-shadow duration-200">
+        <h3 class="text-md font-medium text-gray-600">Capital</h3>
+        <p class="text-2xl font-bold text-gray-800">${{ capital|floatformat:2 }}</p>
+    </div>
+
+
+        <!-- Business -->
+        <div class="p-4 rounded-xl bg-white shadow hover:shadow-lg transition-shadow duration-200">
+            <h3 class="text-md font-medium text-gray-600"> Wallet Balance </h3>
+            <p class="text-2xl font-bold text-gray-800">${{ wallet_balance|floatformat:2 }}</p>
+        </div>
+
+        <!-- P2P Trade -->
+    <div class="p-4 rounded-xl bg-white shadow hover:shadow-lg transition-shadow duration-200">
+            <h3 class="text-md font-medium text-gray-600"> Total Earnings </h3>
+            <p class="text-2xl font-bold text-gray-800">${{ total_earnings|floatformat:2 }}</p>
+        </div>
+    </div>
+</div>
+
+<!-- Tailwind CSS classes used for styling -->
+
     <br>
 <!-- Centered Display for Investments -->
 <div class="flex flex-col items-center justify-center px-4">
@@ -117,39 +133,6 @@
 {% endfor %}
 
 <br>  
-  <!-- Enhanced Referral Program Section -->
-  <div class="mt-8 bg-gray-800 rounded-lg shadow-lg p-6">
-    <h2 class="text-2xl font-bold mb-6 text-white">Referral Program</h2>
-    
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-gray-700 p-4 rounded-lg">
-            <h3 class="text-lg font-semibold mb-2 text-white">Your Referral Code</h3>
-            <div class="flex items-center space-x-2">
-                <code id="referralCode" class="bg-gray-800 px-3 py-2 rounded text-lg flex-1 text-white">{{ user.referral.referral_code }}</code>
-                <button onclick="copyReferralCode()" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded">
-                    Copy
-                </button>
-            </div>
-        </div>
-        
-        <div class="bg-gray-700 p-4 rounded-lg">
-            <h3 class="text-lg font-semibold mb-2 text-white">Total Referrals</h3>
-            <p class="text-3xl font-bold text-green-400">{{ user.referral.referral_count }}</p>
-        </div>
-        
-        <div class="bg-gray-700 p-4 rounded-lg">
-            <h3 class="text-lg font-semibold mb-2 text-white">Referral Earnings</h3>
-            <p class="text-3xl font-bold text-green-400">${{ user.referral.referral_earnings|floatformat:2 }}</p>
-        </div>
-    </div>
-
-    <div class="mt-6">
-        <button onclick="shareReferralLink()" 
-                class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg text-lg transition duration-200">
-            Share Your Referral Link
-        </button>
-    </div>
-</div>
 
 
     <div>
@@ -178,33 +161,5 @@
     </div>
 
     
-<script>
-    function copyReferralCode() {
-        const referralCode = document.getElementById('referralCode').textContent;
-        navigator.clipboard.writeText(referralCode).then(() => {
-            alert('Referral code copied to clipboard!');
-        }).catch(err => {
-            console.error('Failed to copy text: ', err);
-        });
-    }
-    
-    function shareReferralLink() {
-        const referralLink = `https://yourwebsite.com/signup/?ref={{ user.referral.referral_code }}`;
-        
-        if (navigator.share) {
-            navigator.share({
-                title: 'Join our investment platform!',
-                text: 'Use my referral code to sign up!',
-                url: referralLink
-            }).catch((error) => console.log('Error sharing:', error));
-        } else {
-            navigator.clipboard.writeText(referralLink).then(() => {
-                alert('Referral link copied to clipboard!');
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-            });
-        }
-    }
-    </script>
 {% endblock %}
 
